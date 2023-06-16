@@ -16,7 +16,7 @@ describe('Create Project', () => {
         //ação:
         cy.gui_createProject(project) //comando criado na pasta gui_commands
 
-        //resultados esperados:
+        //resultados esperados/validações:
         cy.url().should('be.equal', `${Cypress.config('baseUrl')}/${Cypress.env('user_name')}/${project.name}`)
         cy.contains(project.name).should('be.visible')
         cy.contains(project.description).should('be.visible')
