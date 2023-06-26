@@ -1,19 +1,26 @@
-Cypress.Commands.add("login", (
-  user = Cypress.env("user_name"),
-  password = Cypress.env("user_password"),
-  { cacheSession = true } = {}, // estamos guardando o login no cypress
+Cypress.Commands.add('login', (
+  user = Cypress.env('user_name'),
+  password = Cypress.env('user_password'),
+  { cacheSession = true } = {},
 ) => {
   const login = () => {
-    cy.visit("/users/sign_in")
+    cy.visit('/users/sign_in')
 
     cy.get("[data-qa-selector='login_field']").type(user)
     cy.get("[data-qa-selector='password_field']").type(password, { log: false })
     cy.get("[data-qa-selector='sign_in_button']").click()
   }
 
+  const validate = () => {
+    cy.visit('/')
+    cy.location('pathname', { timeout: 1000 })
+      .should('not.eq', '/users/sign_in')
+  }
+
   //aqui estamos criando uma variável onde vamos permitir compartilhar o cache com as specs, usando em outros arquivos
   const options = {
     cacheAcrossSpecs: true,
+    validate,
   }
 
   //agora vamos colocar uma condição para que o quando chamarmos a session ele execute o comando abaixo, se não apenas executa o login
@@ -22,8 +29,7 @@ Cypress.Commands.add("login", (
   } else {
     login()
   }
-}
-)
+})
 
 Cypress.Commands.add("logout", () => {
   cy.get(".qa-user-avatar").click()

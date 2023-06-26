@@ -4,13 +4,14 @@ describe('Create Project', () => {
     //pré-condição:
     beforeEach(() => {
         cy.login()
+        cy.visit('/')
     })
 
     it('successfully', () => {
         //vamos colocar em uma variável pois vamos usar outras vezes no projeto, então é só chamar o objeto: project
         const project = {
-            name: `project-${faker.datatype.uuid()}`,
-            description: faker.random.words(5)
+            name: `project-${faker.datatype.uuid()}`, //chamando a forma randomica pelo faker
+            description: faker.random.words(5) //usando a forma randomica com o
         }
 
         //ação:
