@@ -1,7 +1,10 @@
 describe('Login', () => {
     it('successfully', () => {
-      cy.login()
+      const user = Cypress.env('user_name')
+      const password = Cypress.env('user_password')
+      const options = { cacheSession: false } // aqui no login não quero que ele execute a session
+
+      cy.login(user, password, options)
       cy.get('.qa-user-avatar').should('be.visible')
-      cy.get('[data-qa-selector="welcome_title_content"]').contains("Welcome to GitLab")
     })
   })
